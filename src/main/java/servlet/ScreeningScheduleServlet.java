@@ -4,6 +4,8 @@
  */
 package servlet;
 
+import dao.ScreeningScheduleDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,12 +13,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import model.Movie;
+import model.ScreeningSchedule;
 
 /**
  *
  * @author hn235
  */
-@WebServlet(name = "ScreeningScheduleServlet", urlPatterns = {"/screening-schedule"})
+@WebServlet(name = "ScreeningScheduleServlet", urlPatterns = {"/choose-movie","/choose-time"})
 public class ScreeningScheduleServlet extends HttpServlet {
 
     /**
@@ -57,7 +66,40 @@ public class ScreeningScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        ScreeningScheduleDAO screeningScheduleDAO=new ScreeningScheduleDAO();
+        List<ScreeningSchedule> screeningSchedules=screeningScheduleDAO.getAllScreeningSchedule();
+        HttpSession session=request.getSession();
+        session.setAttribute("allScreeningSchedule", screeningSchedules);
+        String path=request.getRequestURI();
+        List<Movie> movies=new ArrayList<>();
+        for(ScreeningSchedule screeningSchedule:screeningSchedules){
+            movies.add(screeningSchedule.getMovie());
+        }
+        if(path.contains("/choose-movie")){
+            LocalDateTime now=LocalDateTime.now();
+            List<Movie> movieList=new ArrayList<>();
+            for(ScreeningSchedule schedule:screeningSchedules){
+                if(schedule.getTime().isAfter(now)){
+                    movieList.add(schedule.getMovie());
+                }
+            }
+            request.setAttribute("movieList", movieList);
+            RequestDispatcher rd=request.getRequestDispatcher("choose_movie_home.jsp");
+            rd.forward(request, response);
+        }
+        if(path.contains("/choose-time")){
+            int id=Integer.parseInt(request.getParameter("movieId"));
+            System.out.println(id);
+            List<ScreeningSchedule> schedules=new ArrayList<>();
+            for(ScreeningSchedule schedule:screeningSchedules){
+                if(schedule.getMovie().getId()==id&&schedule.getTime().isAfter(LocalDateTime.now())){
+                    schedules.add(schedule);
+                }
+            }
+            request.setAttribute("timeList", schedules);
+            RequestDispatcher rd=request.getRequestDispatcher("choose_time_home.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**

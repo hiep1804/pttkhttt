@@ -66,17 +66,15 @@
 </style>
 </head>
 <body>
-
     <h1>Ticket Confirmation Home</h1>
-
     <div class="form-container">
-        <form action="url_xu_ly_xac_nhan_ve" method="post">
+        <form action="<%=request.getContextPath()%>/bill" method="post">
             
             <label for="loyaltyCode">Loyalty card code</label>
-            <input type="text" id="loyaltyCode" name="loyalty_code" required>
+            <input type="text" id="loyaltyCode" name="loyaltycode">
 
             <div class="button-container">
-                <button type="submit" class="action-button">confirm</button>
+                <button type="submit" class="action-button" name="confirm">confirm</button>
             </div>
         </form>
     </div>

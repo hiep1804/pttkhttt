@@ -37,10 +37,10 @@ public class ScreeningScheduleDAO extends DAO {
                 preparedStatement1.setInt(1, id1);
                 Movie movie = new Movie();
                 // Execute the query
-                ResultSet resultSet1 = preparedStatement.executeQuery();
+                ResultSet resultSet1 = preparedStatement1.executeQuery();
 
                 // Process the ResultSet object
-                if (resultSet.next()) {
+                if (resultSet1.next()) {
                     movie.setId(id1);
                     movie.setCategory(resultSet1.getString("category"));
                     movie.setName(resultSet1.getString("name"));

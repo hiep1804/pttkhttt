@@ -4,6 +4,8 @@
  */
 package servlet;
 
+import dao.BillDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.Ticket;
 
 /**
  *
@@ -57,7 +63,8 @@ public class BillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RequestDispatcher rd = request.getRequestDispatcher("bill_home.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -71,7 +78,10 @@ public class BillServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        List<Ticket> tickets = (List<Ticket>) request.getSession(false).getAttribute("tickets1");
+        BillDAO billDAO=new BillDAO();
+        billDAO.addBill(tickets);
+        response.sendRedirect(request.getContextPath()+"/customer_home.jsp");
     }
 
     /**

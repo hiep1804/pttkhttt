@@ -4,6 +4,8 @@
  */
 package servlet;
 
+import dao.TicketDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,12 +13,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import model.Ticket;
 
 /**
  *
  * @author hn235
  */
-@WebServlet(name = "TicketServlet", urlPatterns = {"/ticket"})
+@WebServlet(name = "TicketServlet", urlPatterns = {"/choose-seat"})
 public class TicketServlet extends HttpServlet {
 
     /**
@@ -57,7 +63,20 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("timeId"));
+        TicketDAO ticketDAO = new TicketDAO();
+        List<Ticket> tickets = ticketDAO.getAllTicket(id);
+        List<Ticket> tickets1 = new ArrayList<>();
+        for (Ticket ticket : tickets) {
+            if (!ticket.getSeat().isStatus()) {
+                tickets1.add(ticket);
+            }
+        }
+        request.setAttribute("ticketList", tickets1);
+        HttpSession session=request.getSession();
+        session.setAttribute("ticketList", tickets1);
+        RequestDispatcher rd = request.getRequestDispatcher("choose_seat_home.jsp");
+        rd.forward(request, response);
     }
 
     /**

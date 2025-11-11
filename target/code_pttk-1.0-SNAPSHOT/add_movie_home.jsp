@@ -49,7 +49,7 @@
     <h1><p href="#">Add Movie</a> <a href="<%=request.getContextPath()%>/manager_main_home.jsp">Home</a></h1>
 
     <form id="movieForm" action="movie" method="post">
-        <table id="movieTable">
+        <table id="movieTable" name="tblmovie">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -65,8 +65,8 @@
         </table>
         
         <div class="button-container">
-            <button type="button" onclick="addRow()">Thêm Hàng</button>
-            <button type="submit" name="action" value="add">Add</button>
+            <button type="button" onclick="addRow()" name="addrow">Thêm Hàng</button>
+            <button type="submit" name="save" value="add">Add</button>
         </div>
     </form>
 

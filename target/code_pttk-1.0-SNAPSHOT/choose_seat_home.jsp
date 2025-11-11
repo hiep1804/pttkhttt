@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="model.Ticket"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,7 +36,7 @@
         border: 1px solid black;
         padding: 10px;
         text-align: center;
-        height: 30px; /* Chiều cao cố định cho hàng dữ liệu trống */
+        height: 30px; 
     }
     
     th {
@@ -47,7 +49,7 @@
         margin-top: 30px;
         padding: 10px 30px;
         font-size: 1.1em;
-        background-color: #ddd; /* Màu nền xám nhạt */
+        background-color: #ddd; 
         border: 1px solid #aaa; 
         cursor: pointer;
         color: #000;
@@ -63,37 +65,50 @@
 <body>
 
     <h1>Choose Seat Home</h1>
+    <%
+        List<Ticket> tickets = (List<Ticket>)request.getAttribute("ticketList");
+        String url = request.getContextPath() + "/ticket-confirm";
+    %>
+    
+    <form action="<%= url %>" method="post">
+        <table name="tblseat">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Row</th>
+                    <th>Column</th>
+                    <th>Price</th>
+                    <th>Choose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% 
+                    if (tickets != null && !tickets.isEmpty()) {
+                        for (Ticket t : tickets) {
+                %>
+                <tr>
+                    <td><%= t.getSeat().getName() %></td> 
+                    <td><%= t.getSeat().getRow() %></td>
+                    <td><%= t.getSeat().getCol() %></td>
+                    <td><%= t.getPrice()%></td>
+                    <td>
+                        <input type="checkbox" name="selected_seats" value="<%= t.getId() %>">
+                    </td>
+                </tr>
+                <%
+                        }
+                    } else {
+                %>
+                <tr>
+                    <td colspan="4">Không có ghế nào được tìm thấy.</td>
+                </tr>
+                <%
+                    }
+                %>
+            </tbody>
+        </table>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Row</th>
-                <th>Column</th>
-                <th>Status</th>
-                <th>Choose</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <form action="url_xu_ly_dat_ve" method="post">
-        <button type="submit" class="action-button">Book tickets</button>
+            <button type="submit" class="action-button" name="book">Book tickets</button>
     </form>
 
 </body>

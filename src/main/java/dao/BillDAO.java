@@ -48,6 +48,10 @@ public class BillDAO extends DAO {
                             preparedStatement1.setInt(1, generatedId);
                             preparedStatement1.setInt(2, ticket.getId());
                             preparedStatement1.executeUpdate();
+                            PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE tblseat SET `status` = ? WHERE `id` = ?");
+                            preparedStatement2.setInt(1, 1);
+                            preparedStatement2.setInt(2, ticket.getSeat().getId());
+                            preparedStatement2.executeUpdate();
                         }
                     }
                 }

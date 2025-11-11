@@ -42,7 +42,7 @@
 <body>
 
     <h1>Manager Home</h1>
-    <a href="<%=request.getContextPath()%>/movie_information_management_home.jsp" class="btn btn-manager">Movie information management</a>
+    <a href="<%=request.getContextPath()%>/movie_information_management_home.jsp" class="btn btn-manager" name="showMovieInformationManagement">Movie information management</a>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

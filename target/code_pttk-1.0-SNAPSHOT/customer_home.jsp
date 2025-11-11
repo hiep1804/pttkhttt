@@ -47,7 +47,7 @@
 
     <h1>Customer Home</h1>
     
-    <a href="url_mua_ve_online" class="action-button">Buy tickets online</a>
+    <a href="<%=request.getContextPath()%>/choose-movie" class="action-button" name="buyticketonline">Buy tickets online</a>
     
     </body>
 </html>

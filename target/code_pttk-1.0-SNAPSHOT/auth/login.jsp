@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập</title>
+    <title>Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -48,7 +48,7 @@
     <form action="<%=request.getContextPath()%>/login" method="post">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required placeholder="Enter uername">
+            <input type="text" class="form-control" id="username" name="username" required placeholder="Enter username">
         </div>
 
         <div class="mb-3">
@@ -71,7 +71,7 @@
         %>
 
         <div class="mt-3 text-center">
-            <a href="register.jsp">Chưa có tài khoản? Đăng ký</a>
+            <a href="<%=request.getContextPath()%>/auth/register.jsp">Don't have an account? Sign up</a>
         </div>
     </form>
 </div>

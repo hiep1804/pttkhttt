@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Manager Home</title>
+    <title>Movie Information Management Home</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -42,7 +42,7 @@
 <body>
 
     <h1>Movie Information Management Home</h1>
-    <a href="<%=request.getContextPath()%>/add_movie_home.jsp" class="btn btn-manager">Add movie information</a>
+    <a href="<%=request.getContextPath()%>/add_movie_home.jsp" class="btn btn-manager" name="showAddMovie">Add movie information</a>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

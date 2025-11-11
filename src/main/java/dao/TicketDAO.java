@@ -20,11 +20,11 @@ import model.Ticket;
  * @author hn235
  */
 public class TicketDAO extends DAO{
-    public List<Ticket> getAllTicket(ScreeningSchedule screeningSchedule){
+    public List<Ticket> getAllTicket(int schedule_id){
         List<Ticket> tickets=new ArrayList<>();
         String sql="select * from tblticket where tbl_screening_schedule_id=?";
         try (Connection connection = this.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, screeningSchedule.getId());
+            preparedStatement.setInt(1, schedule_id);
             // Execute the query
             ResultSet resultSet = preparedStatement.executeQuery();
             

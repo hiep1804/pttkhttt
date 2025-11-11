@@ -155,11 +155,7 @@ public class MovieServlet extends HttpServlet {
         int a=movieDAO.addMovie(movies);
         if(a>0)   request.setAttribute("alertMessage", "Add success");
         else    request.setAttribute("alertMessage", "Add failed");
-        request.getRequestDispatcher("/management_movie_info.jsp").forward(request, response);
-        // 5. Phản hồi lại người dùng
-//        response.setContentType("text/html;charset=UTF-8");
-//        response.getWriter().println("<h1>Đã nhận thành công " + movieList.size() + " hàng dữ liệu!</h1>");
-        // Hoặc: response.sendRedirect("success.jsp");
+        response.sendRedirect(request.getContextPath()+"/movie_information_management_home.jsp");
     }
 
     /**

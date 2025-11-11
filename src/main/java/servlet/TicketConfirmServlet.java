@@ -4,10 +4,6 @@
  */
 package servlet;
 
-import dao.CustomerDAO;
-import dao.EmployeeDAO;
-import dao.ManagerDAO;
-import dao.MemberDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,18 +12,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Customer;
-import model.Employee;
-import model.Manager;
-import model.Member;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.Ticket;
 
 /**
  *
  * @author hn235
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "TicketConfirm", urlPatterns = {"/ticket-confirm"})
+public class TicketConfirmServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +42,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet TicketConfirm</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TicketConfirm at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,7 +63,26 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd=request.getRequestDispatcher("auth/login.jsp");
+        List<Ticket> tickets = (List<Ticket>) request.getSession(false).getAttribute("ticketList");
+        System.out.println(tickets);
+        Map<Integer, Ticket> mp = new HashMap<>();
+        for (Ticket ticket : tickets) {
+            mp.put(ticket.getId(), ticket);
+        }
+        String[] selectedSeatIds = request.getParameterValues("selected_seats");
+        float total = 0;
+        List<Ticket> tickets1=new ArrayList<>();
+        if (selectedSeatIds != null) {
+            for (String seatId : selectedSeatIds) {
+                // Xử lý việc đặt vé/tạo bill cho từng ID ghế
+                int id = Integer.parseInt(seatId);
+                total += mp.get(id).getPrice();
+                tickets1.add(mp.get(id));
+            }
+        }
+        request.getSession().setAttribute("tickets1", tickets1);
+        request.getSession().setAttribute("total", total);
+        RequestDispatcher rd = request.getRequestDispatcher("ticket_confirmation_home.jsp");
         rd.forward(request, response);
     }
 
@@ -82,30 +97,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-        MemberDAO memberDAO=new MemberDAO();
-        Member member=memberDAO.getMemberByUsernameAndPassword(username, password);
-        System.out.println(member.getRole());
-        if(member!=null){
-            if(member.getRole().equals("Manager")){
-                EmployeeDAO employeeDAO=new EmployeeDAO();
-                ManagerDAO managerDAO=new ManagerDAO();
-                Manager manager=managerDAO.getManagerByIdEmployee(employeeDAO.getEmployeeByIdMember(member));
-                System.out.println(manager.getName());
-                HttpSession session=request.getSession();
-                session.setAttribute("manager", manager);
-                response.sendRedirect(request.getContextPath()+"/manager_main_home.jsp");
-            }
-            if(member.getRole().equals("Customer")){
-                CustomerDAO customerDAO=new CustomerDAO();
-                Customer customer=customerDAO.getCustomerByIdMember(member);
-                HttpSession session=request.getSession();
-                session.setAttribute("customer", customer);
-                response.sendRedirect(request.getContextPath()+"/customer_home.jsp");
-            }
-        }
+        doGet(request, response);
     }
+
 
     /**
      * Returns a short description of the servlet.

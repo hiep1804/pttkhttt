@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Đăng ký tài khoản</title>
+    <title>User Registration</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -21,7 +21,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             padding: 40px;
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
         }
         .register-card h3 {
             text-align: center;
@@ -44,43 +44,54 @@
 <body>
 
 <div class="register-card">
-    <h3>Tạo tài khoản mới</h3>
+    <h3>Create Account</h3>
     <form action="register" method="post">
+        <!-- Username -->
         <div class="mb-3">
-            <label for="username" class="form-label">Tên đăng nhập</label>
-            <input type="text" class="form-control" id="username" name="username" required placeholder="Nhập tên đăng nhập">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username">
         </div>
 
+        <!-- Password -->
         <div class="mb-3">
-            <label for="email" class="form-label">Địa chỉ Email</label>
-            <input type="email" class="form-control" id="email" name="email" required placeholder="Nhập email của bạn">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password">
         </div>
 
+        <!-- Name -->
         <div class="mb-3">
-            <label for="password" class="form-label">Mật khẩu</label>
-            <input type="password" class="form-control" id="password" name="password" required placeholder="Nhập mật khẩu">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" required placeholder="Enter your full name">
         </div>
 
+        <!-- Date of Birth -->
         <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required placeholder="Nhập lại mật khẩu">
+            <label for="date_of_birth" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
         </div>
 
+        <!-- Address -->
         <div class="mb-3">
-            <label for="nation" class="form-label">Quốc gia</label>
-            <select class="form-select" id="nation" name="nation" required>
-                <option value="">-- Chọn quốc gia --</option>
-                <option>Việt Nam</option>
-                <option>Mỹ</option>
-                <option>Nhật Bản</option>
-                <option>Hàn Quốc</option>
-                <option>Pháp</option>
-            </select>
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" required placeholder="Enter your address">
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email">
+        </div>
 
-        <%-- Hiển thị thông báo (nếu có) --%>
+        <!-- Phone Number -->
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone_number" name="phone_number" required placeholder="Enter your phone number">
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+
+        <%-- Display message (if any) --%>
         <%
             String message = (String) request.getAttribute("message");
             if (message != null) {
@@ -92,8 +103,9 @@
             }
         %>
 
+        <!-- Link to login -->
         <div class="mt-3 text-center">
-            <a href="login.jsp">Đã có tài khoản? Đăng nhập</a>
+            <a href="<%=request.getContextPath()%>/login">Already have an account? Log in</a>
         </div>
     </form>
 </div>
