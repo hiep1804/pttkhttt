@@ -11,6 +11,7 @@ model\ScreeningSchedule.class
 model\Ticket.class
 model\Employee.class
 dao\MovieDAO.class
+servlet\TicketConfirmServlet.class
 servlet\TicketServlet.class
 model\Customer.class
 model\MembershipCard.class
@@ -22,7 +23,6 @@ servlet\BillServlet.class
 model\Manager.class
 dao\BillDAO.class
 model\ScreeningRoom.class
-servlet\TicketConfirm.class
 dao\EmployeeDAO.class
 dao\ScreeningScheduleDAO.class
 model\Bill.class

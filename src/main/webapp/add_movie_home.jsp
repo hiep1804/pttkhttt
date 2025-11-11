@@ -65,7 +65,7 @@
         </table>
         
         <div class="button-container">
-            <button type="button" onclick="addRow()" name="addrow">Thêm Hàng</button>
+            <button type="button" onclick="addRow()" name="addrow">Add Row</button>
             <button type="submit" name="save" value="add">Add</button>
         </div>
     </form>

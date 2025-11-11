@@ -68,7 +68,7 @@
 <body>
     <h1>Ticket Confirmation Home</h1>
     <div class="form-container">
-        <form action="<%=request.getContextPath()%>/bill" method="post">
+        <form action="<%=request.getContextPath()%>/bill" method="get">
             
             <label for="loyaltyCode">Loyalty card code</label>
             <input type="text" id="loyaltyCode" name="loyaltycode">
